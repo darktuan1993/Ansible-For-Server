@@ -1,0 +1,4 @@
+- name: Copy file Tuning OS for Server
+  copy:
+    src: ../file/sysctl.cnf
+    dest: /home/ubuntu/sysctl.cnf

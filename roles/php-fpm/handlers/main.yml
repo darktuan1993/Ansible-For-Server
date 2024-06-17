@@ -1,9 +1,0 @@
-- name: Enable PHP-FPM service
-  systemd:
-    name: php8.3-fpm.service
-    enabled: yes
-
-- name: Start PHP-FPM service
-  systemd:
-    name: php8.3-fpm.service
-    state: restarted

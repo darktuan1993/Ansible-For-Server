@@ -1,8 +1,8 @@
-- name: List username
+- name: Check List User
   include_vars:
     file: ../../../global_vars/user.yaml
 
-- name: Create users
+- name: Create New User on list
   user:
     name: "{{ item.username }}"
     shell: /bin/bash
