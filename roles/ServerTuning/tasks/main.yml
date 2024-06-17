@@ -3,4 +3,4 @@
     src: ../file/sysctl.cnf
     dest: /home/ubuntu/sysctl.cnf
 
-  notify: Systemctl apply config
+  # notify: Systemctl apply config
