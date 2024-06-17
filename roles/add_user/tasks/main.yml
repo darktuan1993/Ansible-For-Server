@@ -1,0 +1,26 @@
+- name: List username
+  include_vars:
+    file: ../../../global_vars/user.yaml
+
+- name: Create "{{ item.username }}" user
+  user:
+    name: "{{ item.username }}"
+    shell: /bin/bash
+    append: yes
+  with_items: "{{ users }}"
+
+- name: ADD SSH KEY "{{ item.username }}"
+  authorized_key:
+    user: "{{ item.username }}"
+    state: present
+    key: "{{ item.sshkey }}"
+  with_items: "{{ users }}" 
+
+- name: ADD PERMITIONS "{{ item.username }}"
+  become: true  
+  lineinfile:
+    path: /etc/sudoers.d/{{ item.username }}
+    create: yes  
+    line: "{{ item.username }} ALL=(ALL) NOPASSWD: ALL"
+    validate: 'visudo -cf %s'
+  with_items: "{{ users }}"

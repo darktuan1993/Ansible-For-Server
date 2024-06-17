@@ -1,0 +1,6 @@
+---
+- name: SETUP NEW SERVER
+  hosts: newserver
+  roles:
+    - add_user
+    # - dnsCreateRecord
