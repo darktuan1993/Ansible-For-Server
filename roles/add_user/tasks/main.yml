@@ -2,25 +2,25 @@
   include_vars:
     file: ../../../global_vars/user.yaml
 
-- name: Create "{{ item.username }}" user
+- name: Create users
   user:
     name: "{{ item.username }}"
     shell: /bin/bash
     append: yes
-  with_items: "{{ users }}"
+  loop: "{{ users }}"
 
-- name: ADD SSH KEY "{{ item.username }}"
+- name: Add SSH keys for users
   authorized_key:
     user: "{{ item.username }}"
     state: present
     key: "{{ item.sshkey }}"
-  with_items: "{{ users }}" 
+  loop: "{{ users }}"
 
-- name: ADD PERMITIONS "{{ item.username }}"
-  become: true  
+- name: Add sudo permissions for users
+  become: true
   lineinfile:
-    path: /etc/sudoers.d/{{ item.username }}
-    create: yes  
+    path: "/etc/sudoers.d/{{ item.username }}"
+    create: yes
     line: "{{ item.username }} ALL=(ALL) NOPASSWD: ALL"
     validate: 'visudo -cf %s'
-  with_items: "{{ users }}"
+  loop: "{{ users }}"
